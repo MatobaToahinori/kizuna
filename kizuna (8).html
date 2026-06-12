@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KIZUNA — 西日本最大の高校生起業プラットフォーム</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ===== リセット & ベース ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green:      #1D9E75;
+      --green-light:#E1F5EE;
+      --green-dark: #0F6E56;
+      --purple:     #7F77DD;
+      --purple-light:#EEEDFE;
+      --purple-dark: #3C3489;
+      --amber:      #EF9F27;
+      --amber-light:#FAEEDA;
+      --amber-dark: #633806;
+      --coral:      #D85A30;
+      --coral-light:#FAECE7;
+      --coral-dark: #712B13;
+      --bg:         #F8F9FA;
+      --surface:    #FFFFFF;
+      --border:     #E8E8E8;
+      --text-main:  #1A1A1A;
+      --text-sub:   #6B6B6B;
+      --text-hint:  #9E9E9E;
+      --radius-sm:  6px;
+      --radius-md:  10px;
+      --radius-lg:  16px;
+      --radius-xl:  24px;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    button { font-family: inherit; cursor: pointer; }
+
+    /* ===== ナビゲーション ===== */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      height: 60px;
+      display: flex; align-items: center;
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto;
+      padding: 0 24px;
+      width: 100%;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 18px; font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+    }
+    .nav-logo-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 4px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 14px; color: var(--text-sub);
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      transition: color 0.15s, background 0.15s;
+    }
+    .nav-links a:hover { color: var(--text-main); background: var(--bg); }
+    .nav-right { display: flex; align-items: center; gap: 10px; }
+    .btn-ghost {
+      font-size: 14px; font-weight: 500;
+      padding: 8px 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-main);
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .btn-ghost:hover { background: var(--bg); border-color: #ccc; }
+    .btn-primary {
+      font-size: 14px; font-weight: 500;
+      padding: 8px 18px;
+      border-radius: var(--radius-md);
+      border: none;
+      background: var(--green);
+      color: #fff;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .btn-primary:hover { background: var(--green-dark); }
+    .btn-primary:active { transform: scale(0.98); }
+    .nav-hamburger {
+      display: none;
+      background: none; border: none;
+      font-size: 22px; color: var(--text-main);
+      padding: 4px;
+    }
+
+    /* ===== ヒーローセクション ===== */
+    .hero {
+      max-width: 1100px; margin: 0 auto;
+      padding: 72px 24px 64px;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 48px;
+      align-items: center;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 500;
+      color: var(--green-dark);
+      background: var(--green-light);
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+    }
+    .hero-eyebrow-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.85); }
+    }
+    .hero-title {
+      font-size: clamp(28px, 4vw, 46px);
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+      margin-bottom: 18px;
+    }
+    .hero-title em {
+      font-style: normal;
+      color: var(--green);
+    }
+    .hero-sub {
+      font-size: 16px; color: var(--text-sub);
+      line-height: 1.8;
+      margin-bottom: 32px;
+      max-width: 480px;
+    }
+    .hero-cta {
+      display: flex; align-items: center; gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn-hero {
+      font-size: 15px; font-weight: 500;
+      padding: 12px 28px;
+      border-radius: var(--radius-md);
+      border: none;
+      background: var(--green);
+      color: #fff;
+      transition: background 0.15s, transform 0.1s;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-hero:hover { background: var(--green-dark); }
+    .btn-hero:active { transform: scale(0.98); }
+    .btn-hero-secondary {
+      font-size: 15px; font-weight: 500;
+      padding: 12px 24px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-main);
+      transition: background 0.15s;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-hero-secondary:hover { background: var(--bg); }
+    .hero-stats {
+      display: flex; gap: 24px; margin-top: 36px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+    }
+    .stat-item {}
+    .stat-num {
+      font-size: 22px; font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+    }
+    .stat-label { font-size: 12px; color: var(--text-sub); margin-top: 2px; }
+
+    /* ===== ヒーロー右：プロフィールプレビュー ===== */
+    .hero-preview {
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .preview-header {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 14px 16px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .preview-header-left { font-size: 13px; font-weight: 500; }
+    .online-count {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 12px; color: var(--green-dark);
+      background: var(--green-light);
+      padding: 3px 10px; border-radius: 100px;
+    }
+    .online-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--green);
+      animation: pulse 1.5s infinite;
+    }
+    .pcard {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 14px 16px;
+      transition: border-color 0.15s;
+    }
+    .pcard:hover { border-color: #bbb; }
+    .pcard-top {
+      display: flex; align-items: flex-start; gap: 11px;
+      margin-bottom: 10px;
+    }
+    .av {
+      width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 500; flex-shrink: 0;
+    }
+    .av-p { background: var(--purple-light); color: var(--purple-dark); }
+    .av-t { background: var(--green-light); color: var(--green-dark); }
+    .av-a { background: var(--amber-light); color: var(--amber-dark); }
+    .av-c { background: var(--coral-light); color: var(--coral-dark); }
+    .pname { font-size: 14px; font-weight: 500; }
+    .pbiz { font-size: 12px; color: var(--text-sub); margin-top: 1px; }
+    .stage-badge {
+      display: inline-block;
+      font-size: 11px; font-weight: 500;
+      padding: 2px 8px; border-radius: 100px; margin-top: 4px;
+    }
+    .stage-op   { background: var(--green-light);  color: var(--green-dark); }
+    .stage-pre  { background: var(--purple-light); color: var(--purple-dark); }
+    .stage-seed { background: var(--amber-light);  color: var(--amber-dark); }
+    .pcard-desc {
+      font-size: 12px; color: var(--text-sub);
+      line-height: 1.6; margin-bottom: 10px;
+    }
+    .skill-row { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 10px; }
+    .skill-tag {
+      font-size: 11px; padding: 2px 8px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      color: var(--text-sub);
+    }
+    .pcard-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      border-top: 1px solid var(--border); padding-top: 10px;
+    }
+    .loc-text {
+      font-size: 11px; color: var(--text-hint);
+      display: flex; align-items: center; gap: 3px;
+    }
+    .connect-btn {
+      font-size: 12px; font-weight: 500;
+      padding: 5px 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: transparent; color: var(--text-main);
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .connect-btn:hover { background: var(--bg); }
+    .connect-btn.sent {
+      background: var(--green-light);
+      color: var(--green-dark);
+      border-color: #9FE1CB;
+    }
+
+    /* ===== セクション共通 ===== */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 64px 24px;
+    }
+    .section-eyebrow {
+      font-size: 12px; font-weight: 500; letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--green-dark);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: clamp(22px, 3vw, 32px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+    .section-sub {
+      font-size: 15px; color: var(--text-sub);
+      max-width: 520px; line-height: 1.8;
+      margin-bottom: 40px;
+    }
+    .divider {
+      border: none; border-top: 1px solid var(--border);
+      margin: 0 24px;
+    }
+
+    /* ===== ターゲット3層 ===== */
+    .target-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .target-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+    .target-card:hover { border-color: #bbb; transform: translateY(-2px); }
+    .target-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+    .target-card.card-green::before  { background: var(--green); }
+    .target-card.card-purple::before { background: var(--purple); }
+    .target-card.card-amber::before  { background: var(--amber); }
+    .target-icon {
+      width: 44px; height: 44px; border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; margin-bottom: 14px;
+    }
+    .icon-green  { background: var(--green-light); }
+    .icon-purple { background: var(--purple-light); }
+    .icon-amber  { background: var(--amber-light); }
+    .target-card-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+    .target-card-sub   { font-size: 13px; color: var(--text-sub); margin-bottom: 14px; line-height: 1.7; }
+    .target-tags       { display: flex; gap: 5px; flex-wrap: wrap; }
+    .target-tag {
+      font-size: 11px; padding: 3px 9px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      color: var(--text-sub);
+    }
+
+    /* ===== 主要機能 ===== */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+    .feature-card:hover { border-color: #bbb; transform: translateY(-2px); }
+    .feature-icon {
+      width: 40px; height: 40px; border-radius: var(--radius-md);
+      background: var(--green-light);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; margin-bottom: 14px;
+    }
+    .feature-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+    .feature-desc  { font-size: 13px; color: var(--text-sub); line-height: 1.7; }
+
+    /* ===== メンバーカードセクション ===== */
+    .members-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    .member-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+    .member-card:hover { border-color: #bbb; transform: translateY(-2px); }
+    .member-card.featured { border: 2px solid var(--purple); }
+    .member-card .pcard-top { margin-bottom: 8px; }
+    .member-card .pcard-desc { font-size: 12px; color: var(--text-sub); line-height: 1.6; margin-bottom: 8px; }
+    .member-card .skill-row  { margin-bottom: 8px; }
+
+    /* ===== CTA バナー ===== */
+    .cta-banner {
+      background: var(--text-main);
+      border-radius: var(--radius-xl);
+      padding: 56px 48px;
+      text-align: center;
+      max-width: 1100px;
+      margin: 0 auto 64px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: var(--green);
+      opacity: 0.12;
+      top: -80px; right: -60px;
+    }
+    .cta-banner::after {
+      content: '';
+      position: absolute;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: var(--purple);
+      opacity: 0.12;
+      bottom: -60px; left: -40px;
+    }
+    .cta-banner-title {
+      font-size: clamp(22px, 3.5vw, 36px);
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+    .cta-banner-sub {
+      font-size: 15px; color: rgba(255,255,255,0.65);
+      margin-bottom: 32px; line-height: 1.8;
+    }
+    .cta-banner-btns {
+      display: flex; align-items: center; justify-content: center;
+      gap: 12px; flex-wrap: wrap;
+    }
+    .btn-white {
+      font-size: 15px; font-weight: 500;
+      padding: 12px 28px;
+      border-radius: var(--radius-md);
+      border: none;
+      background: #fff; color: var(--text-main);
+      transition: opacity 0.15s, transform 0.1s;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-white:hover   { opacity: 0.9; }
+    .btn-white:active  { transform: scale(0.98); }
+    .btn-outline-white {
+      font-size: 15px; font-weight: 500;
+      padding: 12px 24px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255,255,255,0.3);
+      background: transparent; color: #fff;
+      transition: background 0.15s;
+    }
+    .btn-outline-white:hover { background: rgba(255,255,255,0.08); }
+
+    /* ===== MVV セクション ===== */
+    .mvv-wrap {
+      background: var(--text-main);
+      padding: 80px 0;
+    }
+    .mvv-inner {
+      max-width: 1100px; margin: 0 auto;
+      padding: 0 24px;
+    }
+    .mvv-top {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .mvv-eyebrow {
+      display: inline-block;
+      font-size: 12px; font-weight: 500; letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 12px;
+    }
+    .mvv-main-title {
+      font-size: clamp(24px, 3.5vw, 38px);
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+    }
+    .mvv-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+    .mvv-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-lg);
+      padding: 28px 24px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .mvv-card:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.2);
+    }
+    .mvv-card-label {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .mvv-card-label.lbl-m { color: var(--green); }
+    .mvv-card-label.lbl-v { color: var(--purple); }
+    .mvv-card-label.lbl-val { color: var(--amber); }
+    .mvv-card-title {
+      font-size: 17px; font-weight: 700; color: #fff;
+      margin-bottom: 10px; line-height: 1.4;
+    }
+    .mvv-card-body {
+      font-size: 13px; color: rgba(255,255,255,0.65);
+      line-height: 1.8;
+    }
+    .mvv-values {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+    .value-item {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      padding: 20px 16px;
+      text-align: center;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .value-item:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.18);
+    }
+    .value-num {
+      font-size: 11px; font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      color: var(--green);
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+    .value-name {
+      font-size: 14px; font-weight: 700;
+      color: #fff; margin-bottom: 6px;
+    }
+    .value-desc {
+      font-size: 12px; color: rgba(255,255,255,0.5);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 900px) {
+      .mvv-cards  { grid-template-columns: 1fr; }
+      .mvv-values { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .mvv-wrap { padding: 56px 0; }
+      .mvv-values { grid-template-columns: 1fr 1fr; gap: 10px; }
+    }
+
+    /* ===== フッター ===== */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+    }
+    .footer-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap;
+    }
+    .footer-logo { display: flex; align-items: center; gap: 7px; font-size: 16px; font-weight: 700; font-family: 'Inter', sans-serif; }
+    .footer-copy { font-size: 13px; color: var(--text-hint); }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 13px; color: var(--text-sub); }
+    .footer-links a:hover { color: var(--text-main); }
+
+    /* ===== レスポンシブ ===== */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: block; }
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 48px 20px 40px;
+        gap: 40px;
+      }
+      .hero-preview { max-width: 480px; margin: 0 auto; width: 100%; }
+      .target-grid  { grid-template-columns: 1fr; }
+      .feature-grid { grid-template-columns: repeat(2, 1fr); }
+      .members-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .section { padding: 48px 16px; }
+      .divider { margin: 0 16px; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .members-grid { grid-template-columns: 1fr; }
+      .hero-stats { gap: 16px; }
+      .cta-banner { padding: 40px 24px; border-radius: var(--radius-lg); }
+      .nav-right .btn-ghost { display: none; }
+    }
+
+    /* ===== モバイルメニュー ===== */
+    .mobile-menu {
+      display: none;
+      position: fixed; top: 60px; left: 0; right: 0; bottom: 0;
+      background: rgba(255,255,255,0.98);
+      z-index: 99;
+      padding: 24px;
+      flex-direction: column; gap: 8px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      display: block;
+      font-size: 17px; font-weight: 500;
+      color: var(--text-main);
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      border-bottom: 1px solid var(--border);
+    }
+    .mobile-menu a:hover { background: var(--bg); }
+    .mobile-menu .mobile-cta { margin-top: 16px; }
+
+    /* ===== メンバーカード（カスタム上書き） ===== */
+    #members-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+    #members-container .member-card {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      border: none;
+      transform: none;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    #members-container .member-card:hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.13);
+      transform: translateY(-2px);
+      border: none;
+    }
+    #members-container .member-card h3 {
+      color: #2563eb;
+      margin-bottom: 10px;
+    }
+    #members-container .member-card h4 {
+      margin-top: 15px;
+      margin-bottom: 10px;
+    }
+    #members-container .connect-btn {
+      margin-top: 15px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.15s;
+    }
+    #members-container .connect-btn:hover {
+      background: #1d4ed8;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ナビゲーション -->
+  <nav class="nav" role="navigation" aria-label="メインナビゲーション">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <div class="nav-logo-dot"></div>
+        KIZUNA
+      </a>
+      <ul class="nav-links">
+        <li><a href="#members">メンバー探し</a></li>
+        <li><a href="#features">できること</a></li>
+        <li><a href="#targets">対象者</a></li>
+        <li><a href="#mvv">理念</a></li>
+      </ul>
+      <div class="nav-right">
+        <button class="btn-ghost">ログイン</button>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfvzbmI5JBMQ7C2Y8s6er0yK5IuHMpyXSbe7QhL6bW4ofn3DQ/viewform?usp=publish-editor" target="_blank" rel="noopener" class="btn-primary">無料登録</a>
+        <button class="nav-hamburger" aria-label="メニューを開く" onclick="toggleMenu()">☰</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- モバイルメニュー -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#members" onclick="toggleMenu()">メンバー探し</a>
+    <a href="#features" onclick="toggleMenu()">できること</a>
+    <a href="#targets" onclick="toggleMenu()">対象者</a>
+    <a href="#mvv" onclick="toggleMenu()">理念</a>
+    <div class="mobile-cta">
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfvzbmI5JBMQ7C2Y8s6er0yK5IuHMpyXSbe7QhL6bW4ofn3DQ/viewform?usp=publish-editor" target="_blank" rel="noopener" class="btn-hero" style="width:100%;justify-content:center;text-align:center;display:flex;" onclick="toggleMenu()">無料で登録する →</a>
+    </div>
+  </div>
+
+  <!-- ヒーロー -->
+  <section aria-label="キャッチコピー">
+    <div class="hero">
+      <div class="hero-left">
+        <div class="hero-eyebrow">
+          <div class="hero-eyebrow-dot"></div>
+          西日本最大の高校生起業プラットフォーム
+        </div>
+        <h1 class="hero-title">
+          動いている高校生を、<br>
+          <em>もっと遠くへ</em>連れていく場所
+        </h1>
+        <p class="hero-sub">
+          アイデアを持つ人、すでに走っている人、仲間を探している人。
+          KIZUNAは、あなたの次のステップを一緒に考えるコミュニティです。
+        </p>
+        <div class="hero-cta">
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSfvzbmI5JBMQ7C2Y8s6er0yK5IuHMpyXSbe7QhL6bW4ofn3DQ/viewform?usp=publish-editor" target="_blank" rel="noopener" class="btn-hero">無料で登録する →</a>
+          <button class="btn-hero-secondary">メンバーを見る</button>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-num">128+</div>
+            <div class="stat-label">登録起業家</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">47</div>
+            <div class="stat-label">進行中の事業</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">12</div>
+            <div class="stat-label">対応都府県</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-preview">
+        <div class="preview-header">
+          <span class="preview-header-left">起業家を探す</span>
+          <span class="online-count"><span class="online-dot"></span>24人がオンライン中</span>
+        </div>
+        <div class="pcard">
+          <div class="pcard-top">
+            <div class="av av-p">YT</div>
+            <div>
+              <div class="pname">山本 颯太</div>
+              <div class="pbiz">高3 / フードデリバリーアプリ</div>
+              <span class="stage-badge stage-op">運営中</span>
+            </div>
+          </div>
+          <p class="pcard-desc">地元飲食店とユーザーをつなぐアプリを運営。月間500件以上の注文実績。エンジニア・デザイナーを募集中。</p>
+          <div class="skill-row">
+            <span class="skill-tag">マーケ</span>
+            <span class="skill-tag">営業</span>
+            <span class="skill-tag">資金調達</span>
+          </div>
+          <div class="pcard-footer">
+            <span class="loc-text">📍 大阪</span>
+            <button class="connect-btn sent">✓ 申請済</button>
+          </div>
+        </div>
+        <div class="pcard" style="border: 2px solid var(--purple);">
+          <div class="pcard-top">
+            <div class="av av-t">KM</div>
+            <div>
+              <div class="pname">河野 みか</div>
+              <div class="pbiz">高2 / EdTechスタートアップ</div>
+              <span class="stage-badge stage-op">運営中</span>
+            </div>
+          </div>
+          <p class="pcard-desc">中高生向けプログラミング学習SaaSを開発。B2Bで学校導入を進行中。CFOや法務アドバイザーを募集。</p>
+          <div class="skill-row">
+            <span class="skill-tag">開発</span>
+            <span class="skill-tag">教育</span>
+            <span class="skill-tag">BizDev</span>
+          </div>
+          <div class="pcard-footer">
+            <span class="loc-text">📍 兵庫</span>
+            <button class="connect-btn">つながる</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 対象者3層 -->
+  <section class="section" id="targets" aria-label="対象者">
+    <div class="section-eyebrow">対象者</div>
+    <h2 class="section-title">どの段階の人でも、ここから始められる</h2>
+    <p class="section-sub">「すでに動いている」から「まだ迷っている」まで、あなたのステージに合ったコンテンツとコミュニティが揃っています。</p>
+    <div class="target-grid">
+      <div class="target-card card-green">
+        <div class="target-icon icon-green">🚀</div>
+        <div class="target-card-title">すでに起業している</div>
+        <p class="target-card-sub">事業を動かしながら、仲間・資金・メンターを探している人のための場所。</p>
+        <div class="target-tags">
+          <span class="target-tag">メンター紹介</span>
+          <span class="target-tag">資金調達</span>
+          <span class="target-tag">事業PR</span>
+          <span class="target-tag">共同創業者</span>
+        </div>
+      </div>
+      <div class="target-card card-purple">
+        <div class="target-icon icon-purple">🛠️</div>
+        <div class="target-card-title">準備段階にある</div>
+        <p class="target-card-sub">アイデアはある。踏み出す前に情報・仲間・環境が欲しい人のための場所。</p>
+        <div class="target-tags">
+          <span class="target-tag">ビジネス設計</span>
+          <span class="target-tag">チーム組成</span>
+          <span class="target-tag">法人設立</span>
+          <span class="target-tag">実地研修</span>
+        </div>
+      </div>
+      <div class="target-card card-amber">
+        <div class="target-icon icon-amber">💡</div>
+        <div class="target-card-title">起業に興味がある</div>
+        <p class="target-card-sub">将来の選択肢として起業を意識。ロールモデルと学びが欲しい人のための場所。</p>
+        <div class="target-tags">
+          <span class="target-tag">起業家の話</span>
+          <span class="target-tag">体験イベント</span>
+          <span class="target-tag">コミュニティ</span>
+          <span class="target-tag">ビジコン</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 主要機能 -->
+  <section class="section" id="features" aria-label="主要機能">
+    <div class="section-eyebrow">できること</div>
+    <h2 class="section-title">起業を前に進める6つの機能</h2>
+    <p class="section-sub">マッチングからイベント情報、資金調達まで。次のアクションに必要なものがここに揃っています。</p>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">👥</div>
+        <div class="feature-title">起業家マッチング</div>
+        <p class="feature-desc">スキル・業種・ステージ別に共同創業者や仲間を探せる。DM機能でそのまま連絡も可能。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📅</div>
+        <div class="feature-title">イベント情報</div>
+        <p class="feature-desc">西日本各地のピッチ大会・交流会・勉強会を一元管理。参加申し込みもプラットフォーム上で完結。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎓</div>
+        <div class="feature-title">メンタリング予約</div>
+        <p class="feature-desc">大学生・社会人・投資家との1on1セッションをカレンダーで予約。匿名相談にも対応。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📖</div>
+        <div class="feature-title">ストーリー共有</div>
+        <p class="feature-desc">起業した高校生のリアルな経験談・失敗談・成功事例。自分の事業を発信する場にもなる。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💰</div>
+        <div class="feature-title">資金・補助金情報</div>
+        <p class="feature-desc">高校生向け助成金・クラウドファンディング・エンジェル投資家の情報をまとめて検索できる。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💬</div>
+        <div class="feature-title">コミュニティ掲示板</div>
+        <p class="feature-desc">質問・相談・協業募集を気軽に投稿。業種別チャンネルで必要な情報だけ追える。</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- メンバー一覧 -->
+  <section class="section" id="members" aria-label="メンバー紹介">
+    <div class="section-eyebrow">メンバー</div>
+    <h2 class="section-title">西日本で動いている高校生起業家たち</h2>
+    <p class="section-sub">今すぐつながれる起業家の一部を紹介します。登録するとすべてのメンバーと連絡が取れます。</p>
+    <div id="members-container" class="members-grid">
+      <!-- メンバーカードはここに動的に挿入されます -->
+    </div>
+    <div style="text-align:center;margin-top:32px">
+      <button class="btn-ghost" style="font-size:14px;padding:10px 24px">すべてのメンバーを見る →</button>
+    </div>
+  </section>
+
+  <!-- MVV セクション -->
+  <section id="mvv" aria-label="Mission Vision Value" class="mvv-wrap">
+    <div class="mvv-inner">
+      <div class="mvv-top">
+        <div class="mvv-eyebrow">Our Philosophy</div>
+        <h2 class="mvv-main-title">私たちが信じること</h2>
+      </div>
+
+      <div class="mvv-cards">
+        <div class="mvv-card">
+          <div class="mvv-card-label lbl-m">Mission — 使命</div>
+          <div class="mvv-card-title">高校生が年齢に関係なく<br>挑戦できる社会をつくる。</div>
+          <p class="mvv-card-body">年齢は、可能性の限界ではない。今すぐ動き出せる環境と仲間を、KIZUNAは提供し続けます。</p>
+        </div>
+        <div class="mvv-card">
+          <div class="mvv-card-label lbl-v">Vision — 目指す世界</div>
+          <div class="mvv-card-title">アイデアを行動に変え、<br>社会へ価値を生み出す未来。</div>
+          <p class="mvv-card-body">日本中の高校生が仲間とともに、自分のアイデアを現実の価値に変えられる社会を実現します。</p>
+        </div>
+        <div class="mvv-card">
+          <div class="mvv-card-label lbl-val">Value — 価値観</div>
+          <div class="mvv-card-title">5つの軸が、<br>私たちの行動を決める。</div>
+          <p class="mvv-card-body">まず動く。仲間と挑む。実践から学ぶ。次世代を支える。志を尊重する。これがKIZUNAの文化です。</p>
+        </div>
+      </div>
+
+      <div class="mvv-values">
+        <div class="value-item">
+          <div class="value-num">VALUE 01</div>
+          <div class="value-name">First Step</div>
+          <div class="value-desc">まず動く。</div>
+        </div>
+        <div class="value-item">
+          <div class="value-num">VALUE 02</div>
+          <div class="value-name">Connection</div>
+          <div class="value-desc">一人ではなく仲間と挑戦する。</div>
+        </div>
+        <div class="value-item">
+          <div class="value-num">VALUE 03</div>
+          <div class="value-name">Real Action</div>
+          <div class="value-desc">机上ではなく実践から学ぶ。</div>
+        </div>
+        <div class="value-item">
+          <div class="value-num">VALUE 04</div>
+          <div class="value-name">Give Back</div>
+          <div class="value-desc">成長した人が次世代を支える。</div>
+        </div>
+        <div class="value-item">
+          <div class="value-num">VALUE 05</div>
+          <div class="value-name">Respect</div>
+          <div class="value-desc">年齢ではなく志を尊重する。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTAバナー -->
+  <div style="padding: 0 24px;">
+    <div class="cta-banner">
+      <h2 class="cta-banner-title">さあ、仲間と出会おう</h2>
+      <p class="cta-banner-sub">
+        登録は無料、1分で完了。<br>
+        あなたと同じように動いている高校生が、今もここにいる。
+      </p>
+      <div class="cta-banner-btns">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfvzbmI5JBMQ7C2Y8s6er0yK5IuHMpyXSbe7QhL6bW4ofn3DQ/viewform?usp=publish-editor" target="_blank" rel="noopener" class="btn-white">無料で登録する →</a>
+        <button class="btn-outline-white">もっと詳しく見る</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- フッター -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <div class="nav-logo-dot"></div>
+        KIZUNA
+      </div>
+      <nav class="footer-links" aria-label="フッターナビゲーション">
+        <a href="#">利用規約</a>
+        <a href="#">プライバシーポリシー</a>
+        <a href="#">お問い合わせ</a>
+      </nav>
+      <div class="footer-copy">© 2026 KIZUNA. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('mobileMenu');
+      menu.classList.toggle('open');
+    }
+    document.addEventListener('click', function(e) {
+      const menu = document.getElementById('mobileMenu');
+      const hamburger = document.querySelector('.nav-hamburger');
+      if (menu.classList.contains('open') && !menu.contains(e.target) && !hamburger.contains(e.target)) {
+        menu.classList.remove('open');
+      }
+    });
+  </script>
+
+  <script>
+    const API = "https://script.google.com/macros/s/AKfycbxSniRuPlqRVk4S0ubwRazuUDCLBYT-LLQlTcGr9yo7Wz490a69WG5upvqjI7gsqBKp/exec";
+    fetch(API)
+      .then(r => r.json())
+      .then(data => {
+        let html = "";
+        data.forEach(member => {
+          html += `
+            <div class="member-card">
+              <h3>${member.name}</h3>
+              <p>${member.school} / ${member.grade}年</p>
+              <p>${member.prefecture}</p>
+              <p>${member.stage}</p>
+              <h4>${member.business}</h4>
+              <p>${member.description}</p>
+              <button class="connect-btn">つながる</button>
+            </div>
+          `;
+        });
+        document.getElementById("members-container").innerHTML = html;
+      })
+      .catch(error => {
+        document.getElementById("members-container").innerHTML = "エラー：" + error;
+      });
+  </script>
+</body>
+</html>
