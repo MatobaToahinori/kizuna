@@ -997,7 +997,8 @@
 
   <script>
     const API = "https://script.google.com/macros/s/AKfycbxSniRuPlqRVk4S0ubwRazuUDCLBYT-LLQlTcGr9yo7Wz490a69WG5upvqjI7gsqBKp/exec";
-    fetch(API)
+    const script =
+document.createElement("script");
       .then(r => r.json())
       .then(data => {
         let html = "";
